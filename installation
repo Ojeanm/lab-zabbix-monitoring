@@ -1,1 +1,10 @@
+Start new shell session with root privileges.
+$ sudo -s
 
+Install Zabbix repository
+wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu22.04_all.deb
+dpkg -i zabbix-release_latest_7.4+ubuntu22.04_all.deb
+apt update
+
+Install Zabbix server, frontend, agent
+apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent
