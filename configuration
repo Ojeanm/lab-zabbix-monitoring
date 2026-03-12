@@ -1,1 +1,32 @@
+Create initial database
 
+# mysql -uroot -p
+***********
+mysql> create database zabbix character set utf8mb4 collate utf8mb4_bin;
+mysql> create user zabbix@localhost identified by '*********';
+mysql> grant all privileges on zabbix.* to zabbix@localhost;
+mysql> set global log_bin_trust_function_creators = 1;
+mysql> quit;
+
+
+On Zabbix server host import initial schema and data. You will be prompted to enter your newly created password.
+
+zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
+
+Disable log_bin_trust_function_creators option after importing database schema.
+
+mysql -uroot -p
+***********
+mysql> set global log_bin_trust_function_creators = 0;
+mysql> quit;
+
+Configure the database for Zabbix server
+Edit file /etc/zabbix/zabbix_server.conf
+
+DBPassword=***********
+
+Start Zabbix server and agent processes
+Start Zabbix server and agent processes and make it start at system boot.
+
+Open Zabbix UI web page
+The default URL for Zabbix UI when using Apache web server is http://192.168.100.1/zabbix
